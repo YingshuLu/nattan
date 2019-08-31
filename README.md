@@ -11,7 +11,8 @@ nattan has implemented several common protocols based on non-blocking sync API, 
 ## DNS resolve
 
 ```
-#include "proto/dns/DNS.h"
+#include "nattan/proto/dns/DNS.h"
+#include "natan/task/Task"
 
 class DNSTask : public Task {
 
@@ -20,7 +21,10 @@ public:
       ...
       DNS dns;
       const char* domain = "www.google.com";
-      dns.resolve(domain);
+      const char* ip = nullptr;
+      if(dns.resolve(domain)) {
+        ip = dns.getPreferIP();
+      }
   }
 
 };
