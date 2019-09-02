@@ -58,7 +58,7 @@ public:
 
 HttpRequest and HttpResponse extends from HttpParser
 
-## Corution pool in thread
+## Corutine pool in thread
 
 ```
 #include "task/TaskThread.h"
@@ -83,12 +83,17 @@ pool.submit(runnerPtr);
 TaskThread implements corutine-level pool, corutines would be reused to run Runnable and
 may be killed with a specific idle time.
 
+## Corutine schedule
+please refer to my another libcask: https://github.com/YingshuLu/libcask
+
 ## inner-corutine sync 
 Like thread sync, the ways of corutines's listed as:
+```
     sync/SpinLock.h
     sync/TaskMutex.h
     sync/TaskCond.h
     sync/Chan.h
+```
 
 ## third-party Hook
 below hooked third party can be used safely, nattan would convert its API to Async non-blocking IO.
@@ -98,7 +103,6 @@ https://github.com/c-ares/c-ares
 https://github.com/openssl/openssl
 
 Note: please use their sync API with nattan.
-
 DNS in nattan is using c-ares, and nattan has implemented self's SSL wrapper net/ssl/SSLHandler.h, and
 it can also implement SSL inspection with forge certificate.
 
