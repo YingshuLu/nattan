@@ -1,0 +1,1 @@
+/usr/bin/cc    CMakeFiles/hiredis-test.dir/test.c.o  -o hiredis-test -Wl,-rpath,/root/workspace/dev/nattan/src/deps/hiredis libhiredis.so.0.14 
