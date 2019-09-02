@@ -29,3 +29,78 @@ public:
 
 };
 ```
+
+## receive / send http message
+
+```
+#include "core/Buffer.h"
+#include "proto/http/HttpParser.h"
+
+    bool send(Socket& sock, HttpParser& parser) {
+        parser.sendTo(sock);
+        return true;
+    }
+
+    bool recv(Socket& sock, HttpParser& parser) {
+        Buffer buf;
+        while(!parser.eof()) {
+            int n = sock.read(buf.end(), buf.right());
+            logger.info("recv:\n%s\n", buf.end());
+            if (n <= 0) return false;
+            buf.fill(n);
+            int p = parser.parse(buf.data(), buf.length());
+            if (p <= 0) return false;
+            buf.shrink(p);
+        }
+        return true;
+    }
+```
+
+HttpRequest and HttpResponse extends from HttpParser
+
+## Corution pool in thread
+
+```
+#include "task/TaskThread.h"
+#include "thread/Runnable.h"
+
+// corutine would be killed if no task runned after 60 seconds
+TaskThread pool(60 * 1000);
+pool.start();
+...
+
+class Runner: public Runnable {
+ public:
+    void run() {
+      // your code 
+    }
+};
+
+std::shared_ptr<Runner> runnerPtr = std::make_shared<Runner>();
+pool.submit(runnerPtr);
+
+```
+TaskThread implements corutine-level pool, corutines would be reused to run Runnable and
+may be killed with a specific idle time.
+
+## inner-corutine sync 
+Like thread sync, the ways of corutines's listed as:
+    sync/SpinLock.h
+    sync/TaskMutex.h
+    sync/TaskCond.h
+    sync/Chan.h
+
+## third-party Hook
+below hooked third party can be used safely, nattan would convert its API to Async non-blocking IO.
+https://github.com/redis/hiredis
+https://github.com/apache/zookeeper/tree/master/zookeeper-client/zookeeper-client-c
+https://github.com/c-ares/c-ares
+https://github.com/openssl/openssl
+
+Note: please use their sync API with nattan.
+
+DNS in nattan is using c-ares, and nattan has implemented self's SSL wrapper net/ssl/SSLHandler.h, and
+it can also implement SSL inspection with forge certificate.
+
+
+
