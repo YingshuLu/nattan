@@ -96,7 +96,8 @@ Like thread sync, the ways of corutines's listed as:
 ```
 
 ## third-party Hook
-below hooked third party can be used safely, nattan would convert its API to Async non-blocking IO.
+below hooked third party can be used safely, nattan would convert its API to Async non-blocking IO.  
+
 redis client    :   https://github.com/redis/hiredis  
 zookeeper client:   https://github.com/apache/zookeeper/tree/master/zookeeper-client/zookeeper-client-c  
 c-ares          :   https://github.com/c-ares/c-ares  
