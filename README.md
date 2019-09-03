@@ -86,7 +86,7 @@ may be killed with a specific idle time.
 ## Corutine schedule
 please refer to my another libcask: https://github.com/YingshuLu/libcask
 
-## inner-corutine sync 
+## inter-corutine sync 
 Like thread sync, the ways of corutines's listed as:
 ```
     sync/SpinLock.h
