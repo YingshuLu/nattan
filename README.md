@@ -97,10 +97,11 @@ Like thread sync, the ways of corutines's listed as:
 
 ## third-party Hook
 below hooked third party can be used safely, nattan would convert its API to Async non-blocking IO.
-https://github.com/redis/hiredis  
-https://github.com/apache/zookeeper/tree/master/zookeeper-client/zookeeper-client-c  
-https://github.com/c-ares/c-ares  
-https://github.com/openssl/openssl
+redis client    :   https://github.com/redis/hiredis  
+zookeeper client:   https://github.com/apache/zookeeper/tree/master/zookeeper-client/zookeeper-client-c  
+c-ares          :   https://github.com/c-ares/c-ares  
+openssl         :   https://github.com/openssl/openssl  
+mysql client    :   https://dev.mysql.com/downloads/connector/c/  
 
 Note: please use their sync API with nattan.
 DNS in nattan is using c-ares, and nattan has implemented self's SSL wrapper net/ssl/SSLHandler.h, and
