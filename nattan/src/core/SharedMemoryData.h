@@ -13,6 +13,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <string>
+#include "core/File.h"
 #include "core/MemoryData.h"
 
 namespace nattan {
@@ -30,22 +31,26 @@ public:
         fFileName(filename), fSize(size), fAnonymous(anony), fHandle(NULL), fPersist(persist) {}
          
     void* open() {
-        bool exist = File::IsExisted(fFileName.data());
+        std::string abs_filename = "/dev/shm/";
+        abs_filename.append(fFileName);
+        bool exist = File::IsExisted(abs_filename.data());
         int flags = 0;
         int fd = -1;
         off_t offset = 0;
+
+        int page_size = getpagesize();
+        if (fSize % page_size) {
+            fSize = page_size * ((fSize / page_size) + 1);
+        }
+
         if (!fAnonymous) {
-            if (exist) {
-                fd == ::shm_open(fFileName.data(),O_RDWR, 0644);
-            } else {
-                fd = ::shm_open(fFileName.data(), O_RDWR | O_CREAT, 0644);
-                ::ftruncate(fd, fSize);
-            }
+            fd = ::shm_open(fFileName.data(), O_RDWR | O_CREAT, 0644);
             if (fd < 0) return NULL;
+            ::ftruncate(fd, fSize);
         } else {
             flags |= MAP_ANONYMOUS;
         }
-        
+
         fHandle = ::mmap(NULL, fSize, PROT_READ | PROT_WRITE, flags | MAP_SHARED, fd, offset);
         if (fHandle == MAP_FAILED) fHandle = NULL;
         ::close(fd);
@@ -54,7 +59,7 @@ public:
 
     ~SharedMemoryData() {
         ::munmap(fHandle, fSize);
-        if (!fAnonymous && !fPersist)   ::shm_unlink(fFileName.data());
+        if (!fAnonymous && !fPersist) ::shm_unlink(fFileName.data());
     }
 
 public:
