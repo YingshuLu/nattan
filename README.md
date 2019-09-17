@@ -30,7 +30,7 @@ public:
 };
 ```
 
-## receive / send http message
+## Receive / Send http message
 
 ```
 #include "core/Buffer.h"
@@ -58,7 +58,7 @@ public:
 
 HttpRequest and HttpResponse extends from HttpParser
 
-## Corutine pool in thread
+## Coroutine pool per thread
 
 ```
 #include "task/TaskThread.h"
@@ -72,7 +72,7 @@ pool.start();
 class Runner: public Runnable {
  public:
     void run() {
-      // your code 
+      // your code
     }
 };
 
@@ -83,10 +83,10 @@ pool.submit(runnerPtr);
 TaskThread implements corutine-level pool, corutines would be reused to run Runnable and
 may be killed with a specific idle time.
 
-## Corutine schedule
+## Coroutine schedule
 please refer to my another libcask: https://github.com/YingshuLu/libcask
 
-## inter-corutine sync 
+## Inter coroutine sync
 Like thread sync, the ways of corutines's listed as:
 ```
     sync/SpinLock.h
@@ -95,7 +95,7 @@ Like thread sync, the ways of corutines's listed as:
     sync/Chan.h
 ```
 
-## third-party Hook
+## Third-party Hook
 below hooked third party can be used safely, nattan would convert its API to Async non-blocking IO.  
 
 redis client    :   https://github.com/redis/hiredis  
@@ -107,6 +107,3 @@ mysql client    :   https://dev.mysql.com/downloads/connector/c/
 Note: please use their sync API with nattan.
 DNS in nattan is using c-ares, and nattan has implemented self's SSL wrapper net/ssl/SSLHandler.h, and
 it can also implement SSL inspection with forge certificate.
-
-
-
