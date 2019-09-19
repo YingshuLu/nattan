@@ -8,6 +8,7 @@
 #define NATTAN_LOG_LOGGER_H
 
 #include <string>
+#include "sync/TaskMutex.h"
 #include "base/Uncopyable.h"
 
 namespace nattan {
@@ -34,6 +35,7 @@ private:
     int fd;
     std::string logFile;
     LOGGER_LEVEL level = LOGGER_INFO;
+    TaskMutex lock;
 };
 
 } // namespace nattan
