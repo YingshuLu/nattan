@@ -97,7 +97,7 @@ Like thread sync, the ways of corutines's listed as:
 
 ## CPU consumed function
 About CPU-consumed function called in coroutine, it can not be scheduled for  
-other coroutines, nattan provide ##await## interface for such issue:  
+other coroutines, nattan provide **await** interface for such issue:  
 
 ```
 class CPURunner: public runnable {
