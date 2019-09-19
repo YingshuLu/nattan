@@ -133,7 +133,7 @@ Note: please use their sync API with nattan.
 DNS in nattan is using c-ares, and nattan has implemented self's SSL wrapper net/ssl/SSLHandler.h, and
 it can also implement SSL inspection with forge certificate.
 
-## FQA 
+## FAQ 
 + Why not shedule coroutines on multiple-threads, like golang, libgo?  
 - [x] nattan aim to hook legancy projects / library, we can not simply assume those legancy codes did not use thread-bind variants,  
 if scheduling coroutines among threads, these legancy in coroutines may work unexpectly.  
