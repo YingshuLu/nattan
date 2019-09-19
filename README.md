@@ -95,6 +95,31 @@ Like thread sync, the ways of corutines's listed as:
     sync/Chan.h
 ```
 
+## CPU consumed function
+About CPU-consumed function called in coroutine, it can not be scheduled for  
+other coroutines, nattan provide ##await## interface for such issue:  
+
+```
+class CPURunner: public runnable {
+    ...
+};
+
+class MyTask: public Task {
+
+public:
+    void run() {
+        ...
+        CPURunner cpu_runner;
+        Task.await(cpu_runner);
+        ...
+    }
+
+};
+
+``` 
+await implemented by thread-pool on background, would block caller coroutine
+until the Runnable exit. 
+
 ## Third-party Hook
 below hooked third party can be used safely, nattan would convert its API to Async non-blocking IO.  
 

@@ -13,6 +13,7 @@
 #include <string>
 #include "log/Logger.h"
 #include "log/Log.h"
+#include "sync/LockGuard.h"
 extern "C" {
 #include "deps/libcask/log.h"
 }
@@ -43,6 +44,7 @@ void Logger::printf(const char* fmt, ...) {
     if (n > 0 && n < LOG_BUFFER_SIZE) {
         buffer[n] = '\n';
     }
+    LockGuard guard(lock);
     log_printf(fd, LOG_INFO, "%s", buffer);
 
 }
@@ -59,7 +61,7 @@ void Logger::debug(const char* fmt, ...) {
     if (n > 0 && n < LOG_BUFFER_SIZE) {
         buffer[n] = '\n';
     }
-    
+    LockGuard guard(lock);
     log_printf(fd, LOG_DEBUG, "%s", buffer);
 }
 
@@ -74,6 +76,7 @@ void Logger::info(const char* fmt, ...) {
     if (n > 0 && n < LOG_BUFFER_SIZE) {
         buffer[n] = '\n';
     }
+    LockGuard guard(lock);
     log_printf(fd, LOG_INFO, "%s", buffer);
 }
 
@@ -88,6 +91,7 @@ void Logger::error(const char* fmt, ...) {
     if (n > 0 && n < LOG_BUFFER_SIZE) {
         buffer[n] = '\n';
     }
+    LockGuard guard(lock);
     log_printf(fd, LOG_ERROR, "%s", buffer);
 }
 
